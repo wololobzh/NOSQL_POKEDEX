@@ -21,3 +21,5 @@ Pour tester, dans le terminal :
 //Utilisez les différentes commandes à la mano
 
 >db.pokedex.find().limit(3).toArray()
+
+COUCOU ASTOU
