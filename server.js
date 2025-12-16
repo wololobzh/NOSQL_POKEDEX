@@ -8,25 +8,34 @@ const app = express();
 
 let maBaseDeDonneesPokemon = null;
 
-function startServer() {
+async function startServer() {
 
-//clientNoSQL est un objet qui se connecte à la bdd
-const clientNoSQL = new MongoClient(url);
-clientNoSQL.connect();
-//maBaseDeDonneesPokemon est un objet qui représente la bdd pokedex
-maBaseDeDonneesPokemon = clientNoSQL.db("pokedex"); 
+    try {
 
- app.listen(3000, () => {
-   console.log('WOLOLO : Server is running on http://localhost:3000');
- })
+        //clientNoSQL est un objet qui se connecte à la bdd
+        const clientNoSQL = new MongoClient(url);
+        await clientNoSQL.connect();
+        //maBaseDeDonneesPokemon est un objet qui représente la bdd pokedex
+        maBaseDeDonneesPokemon = clientNoSQL.db("pokemon");
 
+        console.log("maBaseDeDonneesPokemon : " + maBaseDeDonneesPokemon)
+
+        app.listen(3000, () => {
+            console.log('WOLOLO : Server is running on http://localhost:3000');
+        })
+    } catch (err) {
+        console.error("WOLOLO : ERREUR")
+    }
 }
 
-app.get("/pokemon", (req, res) => {
-    const tabDePokemon = maBaseDeDonneesPokemon.collection("pokedex").find().toArray();
-    res.send(tabDePokemon);
+app.get("/pokemon", async (req, res) => {
+    try {
+        const pokedexArray = await maBaseDeDonneesPokemon.collection("pokedex").find().toArray();
+        res.json(pokedexArray);
+    } catch (err) {
+        console.error(err)
+    }
 });
-
 
 app.get("/", (req, res) => {
     res.send("Bienvenue dans mon Pokédex");
