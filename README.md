@@ -48,3 +48,5 @@ Pour tester, dans le terminal :
 
 >db.pokedex.find({nom:"Wololosky"})
 
+>db.pokedex.deleteOne({nom:"Wololosky"})
+
