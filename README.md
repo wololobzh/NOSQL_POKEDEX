@@ -23,3 +23,5 @@ Pour tester, dans le terminal :
 >db.pokedex.find().limit(3).toArray()
 
 COUCOU ASTOU
+
+Coucou Daniel
